@@ -83,7 +83,7 @@ import React, {
           <div className="custom-input">
             <input
               required
-              placeholder={value ? value[label] : prompt}
+              placeholder={prompt}
               type="text"
               onChange={(e) => {
                 dispatch({ type: "query", value: e.target.value });
@@ -95,7 +95,8 @@ import React, {
           </div>
         </div>
         <div className={`options ${open ? "open" : null}`}>
-       {multiselect && <button type="button" onClick={handleSelectAll}>Select All</button>}
+        {filteredOptions.length === 0 && 'No data found.'}
+       {(multiselect && filteredOptions.length > 0)  && <button type="button" onClick={handleSelectAll}>Select All</button>}
           {filteredOptions.map((option, i) => {
             let isActive = false;
             let checked = typeof option === 'object' ? value.find(v => v.id === option[id]) : value.find(v => v === option)
@@ -116,7 +117,7 @@ import React, {
               />
             );
           })}
-        {multiselect && <button type="button" onClick={handleClear}>Clear</button>}
+        {(multiselect && filteredOptions.length > 0)   && <button type="button" onClick={handleClear}>Clear</button>}
         </div>
       </div>
     );
